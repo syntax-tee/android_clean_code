@@ -31,6 +31,7 @@ class RestaurantsActivity : AppCompatActivity() {
         }
         showRestaurants()
     }
+
     private fun getRestaurants(completionHandler: (response: RestaurantListResponse) -> Unit) {
 
         val client = RestaurantsRestClient()
@@ -46,7 +47,7 @@ class RestaurantsActivity : AppCompatActivity() {
     }
 
     private fun showRestaurants() {
-        getRestaurants { response->
+        getRestaurants { response ->
             val parsedRestaurants = parseRestaurants(response)
             val filteredRestaurants = filterRestaurants(parsedRestaurants)
             displayRestaurants(filteredRestaurants)
@@ -62,7 +63,11 @@ class RestaurantsActivity : AppCompatActivity() {
                     displayName = "Restaurant ${restaurant.name}",
                     displayDistance = "at ${restaurant.distance} KM distance",
                     imageUrl = restaurant.imageUrl,
-                    type = restaurant.type
+                    type = when (restaurant.type) {
+                        "EAT_IN" -> RestaurantsType.EAT_IN
+                        "TAKE_AWAY" -> RestaurantsType.TAKE_AWAY
+                        else -> RestaurantsType.DRIVE_THROUGH
+                    }
                 )
             )
         }
@@ -98,11 +103,14 @@ class RestaurantsActivity : AppCompatActivity() {
             val distance = FloatArray(2)
 
             Location.distanceBetween(
-                userLat, userLong,
-                filteredRestaurant.location.latitude, filteredRestaurant.location.longitude, distance
+                userLat,
+                userLong,
+                filteredRestaurant.location.latitude,
+                filteredRestaurant.location.longitude,
+                distance
             )
 
-            val distanceResult = distance[0].toInt()/1000
+            val distanceResult = distance[0].toInt() / 1000
             filteredRestaurant.distance = distanceResult
         }
         Collections.sort(filteredRestaurants, RestaurantDistanceSorter())
@@ -114,7 +122,7 @@ class RestaurantsActivity : AppCompatActivity() {
         val parsedRestaurants = arrayListOf<Restaurant>()
 
         if (restaurants != null) {
-            for (responseRestaurant in restaurants) {
+            restaurants.forEach { responseRestaurant ->
                 if (responseRestaurant.name != null
                     && responseRestaurant.imageUrl != null
                 ) {

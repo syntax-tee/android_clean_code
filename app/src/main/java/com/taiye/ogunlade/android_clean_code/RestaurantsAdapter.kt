@@ -43,26 +43,12 @@ class RestaurantsAdapter() :
                 cardRestaurant.setOnClickListener {
                     clickListener?.onRestaurantClicked(restaurant.id)
                 }
-                
-                when(restaurant.type) {
-                    "TAKE_AWAY" -> {
-                        restaurantFabIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.take_away))
-                        restaurantType.text = context.getString(R.string.take_away)
-                        restaurantType.setTextColor(context.getColor(R.color.orange))
-                    }
-                    "EAT_IN" -> {
-                        restaurantFabIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.eat_in))
-                        restaurantType.text = context.getString(R.string.eat_in)
-                        restaurantType.setTextColor(context.getColor(R.color.brown))
-                    }
-                    "DRIVE_THROUGH" -> {
-                        restaurantFabIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drive_through))
-                        restaurantType.text = context.getString(R.string.drive_t)
-                        restaurantType.setTextColor(context.getColor(R.color.colorAccent))
-                    }
-                }
-            }
 
+                restaurantFabIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.take_away))
+                restaurantType.text =  restaurant.type.text
+                restaurantType.setTextColor(context.getColor(restaurant.type.textColorId))
+
+            }
         }
     }
 
