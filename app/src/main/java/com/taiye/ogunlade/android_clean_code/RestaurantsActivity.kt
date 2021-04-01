@@ -32,6 +32,11 @@ class RestaurantsActivity : AppCompatActivity() {
         showRestaurants()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
+    }
+
     private fun getRestaurants(completionHandler: (response: RestaurantListResponse) -> Unit) {
 
         val client = RestaurantsRestClient()
@@ -54,7 +59,7 @@ class RestaurantsActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayRestaurants(filteredRestaurants: ArrayList<Restaurant>) {
+    private fun  displayRestaurants(filteredRestaurants: ArrayList<Restaurant>) {
         val displayRestaurants = arrayListOf<RestaurantDisplayItem>()
         filteredRestaurants.forEach { restaurant ->
             displayRestaurants.add(
@@ -145,10 +150,4 @@ class RestaurantsActivity : AppCompatActivity() {
         }
         return parsedRestaurants
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.dispose()
-    }
-
 }
