@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Restaurants Corner</string>
+    <string name="take_away">Take away</string>
+    <string name="eat_in">Eat in</string>
+    <string name="drive_t">Drive T</string>
+</resources>
