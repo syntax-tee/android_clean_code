@@ -59,7 +59,7 @@ class RestaurantsActivity : AppCompatActivity() {
         }
     }
 
-    private fun  displayRestaurants(filteredRestaurants: ArrayList<Restaurant>) {
+    private fun displayRestaurants(filteredRestaurants: ArrayList<Restaurant>) {
         val displayRestaurants = arrayListOf<RestaurantDisplayItem>()
         filteredRestaurants.forEach { restaurant ->
             displayRestaurants.add(
@@ -93,15 +93,16 @@ class RestaurantsActivity : AppCompatActivity() {
         }
     }
 
-    private fun filterRestaurants(parsedRestaurants: ArrayList<Restaurant>): ArrayList<Restaurant> {
+    private fun filterRestaurants(restaurants: List<Restaurant>): ArrayList<Restaurant> {
         val filteredRestaurants = arrayListOf<Restaurant>()
-        for (parsedRestaurant in parsedRestaurants) {
+        for (parsedRestaurant in restaurants) {
             if (parsedRestaurant.closingHour < 6)
                 filteredRestaurants.add(parsedRestaurant)
         }
 
-        // val latitude = MockCreator.getUserLatitude()
-        for (filteredRestaurant in filteredRestaurants) {
+        restaurants.filter { restaurant ->
+            restaurant.closingHour < 6
+        }.map { restaurants ->
             val userLat = MockCreator.getUserLatitude()
             val userLong = MockCreator.getUserLongitude()
 
@@ -110,44 +111,41 @@ class RestaurantsActivity : AppCompatActivity() {
             Location.distanceBetween(
                 userLat,
                 userLong,
-                filteredRestaurant.location.latitude,
-                filteredRestaurant.location.longitude,
+                restaurants.location.latitude,
+                restaurants.location.longitude,
                 distance
             )
 
             val distanceResult = distance[0].toInt() / 1000
-            filteredRestaurant.distance = distanceResult
+            restaurants.distance = distanceResult
+            return@map restaurants
+        }.sortedBy { restaurant -> restaurant.distance }
+
+        // val latitude = MockCreator.getUserLatitude()
+        for (filteredRestaurant in filteredRestaurants) {
+
         }
         Collections.sort(filteredRestaurants, RestaurantDistanceSorter())
         return filteredRestaurants
     }
 
-    private fun parseRestaurants(response: RestaurantListResponse): ArrayList<Restaurant> {
-        val restaurants = response.restaurants
-        val parsedRestaurants = arrayListOf<Restaurant>()
+    private fun parseRestaurants(response: RestaurantListResponse): List<Restaurant> {
+        return response.restaurants?.filter { restaurantResponse ->
+            restaurantResponse.name != null && restaurantResponse.imageUrl != null
+        }?.map { restaurantResponse ->
+            val location = SimpleLocation(
+                restaurantResponse.locationLatitude,
+                restaurantResponse.locationLatitude
+            )
+            return@map Restaurant(
+                id = restaurantResponse.id,
+                name = restaurantResponse.name!!,
+                imageUrl = restaurantResponse.imageUrl!!,
+                closingHour = restaurantResponse.closingHour,
+                location = location,
+                type = restaurantResponse.type
+            )
 
-        if (restaurants != null) {
-            restaurants.forEach { responseRestaurant ->
-                if (responseRestaurant.name != null
-                    && responseRestaurant.imageUrl != null
-                ) {
-                    val location = SimpleLocation(
-                        responseRestaurant.locationLatitude,
-                        responseRestaurant.locationLongitude
-                    )
-                    parsedRestaurants.add(
-                        Restaurant(
-                            id = responseRestaurant.id,
-                            name = responseRestaurant.name,
-                            imageUrl = responseRestaurant.imageUrl,
-                            location = location,
-                            closingHour = responseRestaurant.closingHour,
-                            type = responseRestaurant.type
-                        )
-                    )
-                }
-            }
-        }
-        return parsedRestaurants
+        }.orEmpty()
     }
 }
