@@ -1,6 +1,8 @@
-package com.taiye.ogunlade.android_clean_code
+package com.taiye.ogunlade.android_clean_code.business.restaurants
 
 import android.location.Location
+import com.taiye.ogunlade.android_clean_code.Restaurant
+import com.taiye.ogunlade.android_clean_code.RestaurantDistanceSorter
 import com.taiye.ogunlade.android_clean_code.mocks.MockCreator
 import java.util.*
 

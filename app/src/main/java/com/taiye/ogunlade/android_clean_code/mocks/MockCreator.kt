@@ -1,7 +1,7 @@
 package com.taiye.ogunlade.android_clean_code.mocks
 
-import com.taiye.ogunlade.android_clean_code.RestaurantListResponse
-import com.taiye.ogunlade.android_clean_code.RestaurantResponse
+import com.taiye.ogunlade.android_clean_code.api.restaurants.RestaurantListResponse
+import com.taiye.ogunlade.android_clean_code.api.restaurants.RestaurantResponse
 import io.reactivex.Single
 
 /**

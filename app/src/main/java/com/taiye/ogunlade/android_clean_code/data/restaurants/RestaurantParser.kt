@@ -1,4 +1,8 @@
-package com.taiye.ogunlade.android_clean_code
+package com.taiye.ogunlade.android_clean_code.data.restaurants
+
+import com.taiye.ogunlade.android_clean_code.Restaurant
+import com.taiye.ogunlade.android_clean_code.SimpleLocation
+import com.taiye.ogunlade.android_clean_code.api.restaurants.RestaurantListResponse
 
 class RestaurantParser {
 

@@ -1,4 +1,4 @@
-package com.taiye.ogunlade.android_clean_code
+package com.taiye.ogunlade.android_clean_code.api.restaurants
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package com.taiye.ogunlade.android_clean_code
+package com.taiye.ogunlade.android_clean_code.features.restaurants
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.taiye.ogunlade.android_clean_code.R
+import com.taiye.ogunlade.android_clean_code.domain.models.restaurants.RestaurantDisplayItem
 import kotlinx.android.synthetic.main.item_restaurant.view.*
 
 class RestaurantsAdapter() :
@@ -44,7 +46,9 @@ class RestaurantsAdapter() :
                     clickListener?.onRestaurantClicked(restaurant.id)
                 }
 
-                restaurantFabIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.take_away))
+                restaurantFabIcon.setImageDrawable(ContextCompat.getDrawable(context,
+                    R.drawable.take_away
+                ))
                 restaurantType.text =  restaurant.type.text
                 restaurantType.setTextColor(context.getColor(restaurant.type.textColorId))
 

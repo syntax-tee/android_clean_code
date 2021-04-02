@@ -1,9 +1,14 @@
-package com.taiye.ogunlade.android_clean_code
+package com.taiye.ogunlade.android_clean_code.features.restaurants
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.taiye.ogunlade.android_clean_code.R
+import com.taiye.ogunlade.android_clean_code.Restaurant
+import com.taiye.ogunlade.android_clean_code.data.restaurants.RestaurantParser
+import com.taiye.ogunlade.android_clean_code.api.restaurants.RestaurantsRestClient
+import com.taiye.ogunlade.android_clean_code.business.restaurants.RestaurantsRules
 import kotlinx.android.synthetic.main.activity_restaurants.*
 import java.util.*
 
